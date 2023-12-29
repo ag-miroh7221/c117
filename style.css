@@ -1,0 +1,40 @@
+body{
+    background-color:darksalmon;
+    animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+    10% {background-color: coral;}
+    20% {background-color:lightgreen;}
+    30% {background-color: cornflowerblue;}
+}
+
+#timer{
+    font-size: 15px;
+    float: right;
+    margin-right: 5%;
+}
+
+#sketch_sketch{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: wavy;
+    color: darkblue;
+}
+
+p {
+    font-size: x-large;
+    color: darkgreen;
+}
+
+#score {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    color:darkmagenta;
+    text-align: left !important !important;
+}
+
+#timer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    color: crimson;
+}
