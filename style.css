@@ -32,8 +32,16 @@ p,span
   {
     padding-top:10px;
     font-family: 'Special Elite', fantasy;
-    font-size:25px;
+    font-size:20px;
     
   }
 
-  
+#score {
+  float:left;
+  margin-left: 20px;
+}
+
+#timer {
+  float: right;
+  margin-right : 20px;
+}

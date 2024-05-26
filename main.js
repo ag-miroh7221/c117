@@ -7,7 +7,6 @@ drawn_sketch = "";
 answer_holder = "";
 score = 0;
 
-set = "";
 
 random_number=Math.floor((Math.random()*quick_draw_data_set.length)+1);
 
@@ -17,41 +16,69 @@ sketch_name = quick_draw_data_set[random_number];
 document.getElementById("sketch_sketch").innerHTML="Sketch To Be Drawn: " + sketch_name;
 
 
-function updateCanvas () {
+function updateCanvas() {
     background("white");
     random_number=Math.floor((Math.random()*quick_draw_data_set.length)+1);
     sketch_name = quick_draw_data_set[random_number];
-document.getElementById("sketch_sketch").innerHTML="Sketch To Be Drawn: " + sketch_name;
-
+    document.getElementById("sketch_sketch").innerHTML="Sketch To Be Drawn: " + sketch_name;
 }
 
-function setup() {
-    canvas = document.getElementById("myCanvas");
+function setup(){
+    canvas = createCanvas(700, 400);
+    canvas.center();
     background("white");
+
+    canvas.mouseReleased(classifyCanvas);
 }
+
+function preload() {
+    classifier = ml5.imageClassifier("DoodleNet");
+}
+
+function classifyCanvas() {
+    classifier.classify(canvas, gotResult);
+}
+
 
 function draw() {
+    check_sketch();
        if (drawn_sketch == sketch_name) {
-        answer_holder = set;       //what is "set" as per code instructions? a value or a variable?//
+        answer_holder = "set";       
         score = score + 1;
         document.getElementById("score").innerHTML = "Score : " + score;
-    }
-    check_sketch();
-}
+        }
+        strokeWeight(10);
+        stroke(0);
+
+        if(mouseIsPressed) {
+            line(pmouseX , pmouseY , mouseX , mouseY);
+        }
+ }
 
 function check_sketch() {
-    timer_counter = timer_counter++;
+    timer_counter++;
     document.getElementById("timer").innerHTML = "Timer : " + timer_counter;
     console.log("timer is " + timer_counter);
 
-    if(timer_counter > 500) {
+    if(timer_counter > 2000) {
         timer_counter = 0;
         timer_check = "completed";
     }
 
-    if(timer_check == "completed" || answer_holder == set) {
+    if(timer_check == "completed" || answer_holder == "set") {
         timer_check = "";
         answer_holder = "";
         updateCanvas();
     }
+}
+
+function gotResult(error, results){
+    if (error){
+        console.error(error);
+    }
+    console.log(results);
+    document.getElementById('sketch_name').innerHTML = 'Your Sketch: ' + results[0].label;
+
+    document.getElementById('confidence_num').innerHTML = 'Confidence: ' + Math.round(results[0].confidence*100) + '%';
+
 }
